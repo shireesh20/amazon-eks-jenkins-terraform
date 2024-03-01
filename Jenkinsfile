@@ -21,17 +21,23 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
-            when {
-                branch 'master'
-            }
-            steps {
-                echo '=== Building Petclinic Docker Image ==='
-                script {
-                    app = docker.build("ibuchh/petclinic-spinnaker-jenkins")
-                }
+stage('Build Docker Image') {
+    when {
+        branch 'master'
+    }
+    steps {
+        echo '=== Building Petclinic Docker Image ==='
+        script {
+            try {
+                app = docker.build("ibuchh/petclinic-spinnaker-jenkins")
+            } catch (Exception e) {
+                echo "Docker build failed: ${e.getMessage()}"
+                throw e // Re-throw the exception to fail the build
             }
         }
+    }
+}
+
         stage('Push Docker Image') {
             when {
                 branch 'master'
