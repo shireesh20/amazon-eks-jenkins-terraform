@@ -29,7 +29,7 @@ stage('Build Docker Image') {
         echo '=== Building Petclinic Docker Image ==='
         script {
             try {
-                app = docker.build("ibuchh/petclinic-spinnaker-jenkins")
+                app = docker.build("shireesh20/petclinic-spinnaker-jenkins")
             } catch (Exception e) {
                 echo "Docker build failed: ${e.getMessage()}"
                 throw e // Re-throw the exception to fail the build
@@ -57,8 +57,8 @@ stage('Build Docker Image') {
         stage('Remove local images') {
             steps {
                 echo '=== Delete the local docker images ==='
-                sh("docker rmi -f ibuchh/petclinic-spinnaker-jenkins:latest || :")
-                sh("docker rmi -f ibuchh/petclinic-spinnaker-jenkins:$SHORT_COMMIT || :")
+                sh("docker rmi -f shireesh20/petclinic-spinnaker-jenkins:latest || :")
+                sh("docker rmi -f shireesh20/petclinic-spinnaker-jenkins:$SHORT_COMMIT || :")
             }
         }
     }
